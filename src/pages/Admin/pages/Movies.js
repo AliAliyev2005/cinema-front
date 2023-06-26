@@ -1,56 +1,61 @@
-import {
-    Box,
-    Button,
-    Drawer,
-    DrawerBody,
-    DrawerFooter,
-    DrawerHeader,
-    DrawerOverlay,
-    DrawerContent,
-    DrawerCloseButton,
-    useDisclosure,
-    Input,
-    FormControl,
-    FormLabel,
-} from "@chakra-ui/react";
+import { Box, Button, Input, FormControl, FormLabel, Textarea, SimpleGrid } from "@chakra-ui/react";
 import React from "react";
 
 function Movies() {
-    const { isOpen, onOpen, onClose } = useDisclosure();
+    function handleAdd(event) {
+        event.preventDefault();
+
+        const movie = {
+            name: event.target.elements.name.value,
+        };
+    }
 
     return (
         <Box>
             <Box>
-                <Button onClick={onOpen} colorScheme="blue">
-                    Add Movie
-                </Button>
-                <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
-                    <DrawerOverlay />
-                    <DrawerContent>
-                        <DrawerCloseButton />
-                        <DrawerHeader>Create new movie</DrawerHeader>
-
-                        <DrawerBody>
-                            <form>
-                                <FormControl>
-                                    <FormLabel mt={2}>Name</FormLabel>
-                                    <Input type="text" placeholder="Login" />
-                                    <FormLabel mt={2}>Age limit</FormLabel>
-                                    <Input type="number" placeholder="Age limit" />
-                                    <FormLabel mt={2}>Trailer</FormLabel>
-                                    <Input type="text" placeholder="Trailer link" />
-                                </FormControl>
-                            </form>
-                        </DrawerBody>
-
-                        <DrawerFooter>
-                            <Button variant="outline" mr={3} onClick={onClose}>
-                                Cancel
-                            </Button>
-                            <Button colorScheme="blue">Save</Button>
-                        </DrawerFooter>
-                    </DrawerContent>
-                </Drawer>
+                <form onSubmit={handleAdd}>
+                    <SimpleGrid columns={2} spacing={10}>
+                        <Box>
+                            <FormControl>
+                                <FormLabel>Movie name</FormLabel>
+                                <Input name="name" />
+                            </FormControl>
+                            <FormControl>
+                                <FormLabel>Description</FormLabel>
+                                <Textarea name="description" />
+                            </FormControl>
+                            <FormControl>
+                                <FormLabel>Poster</FormLabel>
+                                <Input name="poster" />
+                            </FormControl>
+                            <FormControl>
+                                <FormLabel>Trailer</FormLabel>
+                                <Input name="trailer" />
+                            </FormControl>
+                        </Box>
+                        <Box>
+                            <FormControl>
+                                <FormLabel>Age limit</FormLabel>
+                                <Input name="ageLimit" type="number" />
+                            </FormControl>
+                            <FormControl>
+                                <FormLabel>Country</FormLabel>
+                                <Input name="country" />
+                            </FormControl>
+                            <FormControl>
+                                <FormLabel>Director</FormLabel>
+                                <Input name="director" />
+                            </FormControl>
+                            <FormControl>
+                                <FormLabel>Duration</FormLabel>
+                                <Input name="duration" type="number" />
+                            </FormControl>
+                        </Box>
+                    </SimpleGrid>
+                    <Button mt={5} colorScheme="blue" type="submit" w={"100%"}>
+                        Add Movie
+                    </Button>
+                </form>
             </Box>
         </Box>
     );

@@ -10,7 +10,9 @@ function index() {
                 <TabList>
                     <Tab>Movies</Tab>
                     <Tab>Languages</Tab>
-                    <Tab>Three</Tab>
+                    <Tab>Genre</Tab>
+                    <Tab>Subtitle</Tab>
+                    <Tab>Format</Tab>
                 </TabList>
 
                 <TabPanels>
