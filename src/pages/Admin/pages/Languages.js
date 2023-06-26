@@ -1,5 +1,13 @@
 import { Box, Button, FormControl, HStack, Input } from "@chakra-ui/react";
-import { Table, Thead, Tbody, Tr, Th, Td, TableContainer } from "@chakra-ui/react";
+import {
+    Table,
+    Thead,
+    Tbody,
+    Tr,
+    Th,
+    Td,
+    TableContainer,
+} from "@chakra-ui/react";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import React, { useEffect, useState } from "react";
 import send from "../../../lib/api";
@@ -9,6 +17,7 @@ function Languages() {
 
     async function getLanguages() {
         const result = await send("/language/read.php");
+        console.log(result);
         setLanguages(result);
     }
 
@@ -28,6 +37,11 @@ function Languages() {
     useEffect(() => {
         getLanguages();
     }, []);
+
+    async function deleteLanguage(l) {
+        await send("/language/delete.php", l);
+        getLanguages();
+    }
 
     return (
         <div>
@@ -56,16 +70,20 @@ function Languages() {
                         </Tr>
                     </Thead>
                     <Tbody>
-                        {languages.map((l, i) => (
+                        {languages?.map((l, i) => (
                             <Tr key={i}>
                                 <Td>{l.name}</Td>
                                 <Td>{l.code}</Td>
                                 <Td>
                                     <HStack>
-                                        <Button colorScheme="red">
+                                        <Button
+                                            onClick={() => deleteLanguage(l)}
+                                            colorScheme="red">
                                             <DeleteIcon />
                                         </Button>
-                                        <Button colorScheme="yellow">
+                                        <Button
+                                            // onClick={editLanguage(l.id)}
+                                            colorScheme="yellow">
                                             <EditIcon />
                                         </Button>
                                     </HStack>
