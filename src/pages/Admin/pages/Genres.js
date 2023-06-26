@@ -4,34 +4,33 @@ import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import React, { useEffect, useState } from "react";
 import send from "../../../lib/api";
 
-function Languages() {
-    const [languages, setLanguages] = useState([]);
+function Genres() {
+    const [genres, setGenres] = useState([]);
 
-    async function getLanguages() {
-        const result = await send("/language/read.php");
-        setLanguages(result);
+    async function getGenres() {
+        const result = await send("/genre/read.php");
+        setGenres(result);
     }
 
     async function handleAdd(event) {
         event.preventDefault();
 
-        const language = {
+        const genre = {
             name: event.target.elements.name.value,
-            code: event.target.elements.code.value,
         };
 
-        await send("/language/create.php", language);
+        await send("/genre/create.php", genre);
 
-        getLanguages();
+        getGenres();
     }
 
     useEffect(() => {
-        getLanguages();
+        getGenres();
     }, []);
 
-    async function deleteLanguage(l) {
-        await send("/language/delete.php", l);
-        getLanguages();
+    async function deleteGenre(l) {
+        await send("/genre/delete.php", l);
+        getGenres();
     }
 
     return (
@@ -41,12 +40,9 @@ function Languages() {
                     <FormControl width="auto">
                         <Input name="name" placeholder="Name" />
                     </FormControl>
-                    <FormControl width="auto">
-                        <Input name="code" placeholder="Code" />
-                    </FormControl>
                     <FormControl>
                         <Button type="submit" colorScheme="blue">
-                            Add Language
+                            Add Genre
                         </Button>
                     </FormControl>
                 </HStack>
@@ -56,22 +52,20 @@ function Languages() {
                     <Thead>
                         <Tr>
                             <Th>Name</Th>
-                            <Th>Code</Th>
                             <Th>Edit</Th>
                         </Tr>
                     </Thead>
                     <Tbody>
-                        {languages?.map((l, i) => (
+                        {genres?.map((l, i) => (
                             <Tr key={i}>
                                 <Td>{l.name}</Td>
-                                <Td>{l.code}</Td>
                                 <Td>
                                     <HStack>
-                                        <Button onClick={() => deleteLanguage(l)} colorScheme="red">
+                                        <Button onClick={() => deleteGenre(l)} colorScheme="red">
                                             <DeleteIcon />
                                         </Button>
                                         <Button
-                                            // onClick={editLanguage(l.id)}
+                                            // onClick={editGenre(l.id)}
                                             colorScheme="yellow"
                                         >
                                             <EditIcon />
@@ -87,4 +81,4 @@ function Languages() {
     );
 }
 
-export default Languages;
+export default Genres;

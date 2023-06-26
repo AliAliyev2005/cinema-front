@@ -4,34 +4,34 @@ import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import React, { useEffect, useState } from "react";
 import send from "../../../lib/api";
 
-function Languages() {
-    const [languages, setLanguages] = useState([]);
+function Subtitles() {
+    const [subtitles, setSubtitles] = useState([]);
 
-    async function getLanguages() {
-        const result = await send("/language/read.php");
-        setLanguages(result);
+    async function getSubtitles() {
+        const result = await send("/subtitle/read.php");
+        setSubtitles(result);
     }
 
     async function handleAdd(event) {
         event.preventDefault();
 
-        const language = {
+        const subtitle = {
             name: event.target.elements.name.value,
             code: event.target.elements.code.value,
         };
 
-        await send("/language/create.php", language);
+        await send("/subtitle/create.php", subtitle);
 
-        getLanguages();
+        getSubtitles();
     }
 
     useEffect(() => {
-        getLanguages();
+        getSubtitles();
     }, []);
 
-    async function deleteLanguage(l) {
-        await send("/language/delete.php", l);
-        getLanguages();
+    async function deleteSubtitle(l) {
+        await send("/subtitle/delete.php", l);
+        getSubtitles();
     }
 
     return (
@@ -46,7 +46,7 @@ function Languages() {
                     </FormControl>
                     <FormControl>
                         <Button type="submit" colorScheme="blue">
-                            Add Language
+                            Add Subtitle
                         </Button>
                     </FormControl>
                 </HStack>
@@ -61,17 +61,17 @@ function Languages() {
                         </Tr>
                     </Thead>
                     <Tbody>
-                        {languages?.map((l, i) => (
+                        {subtitles?.map((l, i) => (
                             <Tr key={i}>
                                 <Td>{l.name}</Td>
                                 <Td>{l.code}</Td>
                                 <Td>
                                     <HStack>
-                                        <Button onClick={() => deleteLanguage(l)} colorScheme="red">
+                                        <Button onClick={() => deleteSubtitle(l)} colorScheme="red">
                                             <DeleteIcon />
                                         </Button>
                                         <Button
-                                            // onClick={editLanguage(l.id)}
+                                            // onClick={editSubtitle(l.id)}
                                             colorScheme="yellow"
                                         >
                                             <EditIcon />
@@ -87,4 +87,4 @@ function Languages() {
     );
 }
 
-export default Languages;
+export default Subtitles;

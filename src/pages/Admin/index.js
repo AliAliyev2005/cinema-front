@@ -2,6 +2,9 @@ import { Container, Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/r
 import React from "react";
 import Movies from "./pages/Movies";
 import Languages from "./pages/Languages";
+import Genres from "./pages/Genres";
+import Subtitles from "./pages/Subtitles";
+import Formats from "./pages/Formats";
 
 function index() {
     return (
@@ -23,7 +26,13 @@ function index() {
                         <Languages />
                     </TabPanel>
                     <TabPanel>
-                        <p>three!</p>
+                        <Genres />
+                    </TabPanel>
+                    <TabPanel>
+                        <Subtitles />
+                    </TabPanel>
+                    <TabPanel>
+                        <Formats />
                     </TabPanel>
                 </TabPanels>
             </Tabs>

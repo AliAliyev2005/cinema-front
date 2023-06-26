@@ -4,34 +4,33 @@ import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import React, { useEffect, useState } from "react";
 import send from "../../../lib/api";
 
-function Languages() {
-    const [languages, setLanguages] = useState([]);
+function Formats() {
+    const [formats, setFormats] = useState([]);
 
-    async function getLanguages() {
-        const result = await send("/language/read.php");
-        setLanguages(result);
+    async function getFormats() {
+        const result = await send("/format/read.php");
+        setFormats(result);
     }
 
     async function handleAdd(event) {
         event.preventDefault();
 
-        const language = {
+        const format = {
             name: event.target.elements.name.value,
-            code: event.target.elements.code.value,
         };
 
-        await send("/language/create.php", language);
+        await send("/format/create.php", format);
 
-        getLanguages();
+        getFormats();
     }
 
     useEffect(() => {
-        getLanguages();
+        getFormats();
     }, []);
 
-    async function deleteLanguage(l) {
-        await send("/language/delete.php", l);
-        getLanguages();
+    async function deleteFormat(l) {
+        await send("/format/delete.php", l);
+        getFormats();
     }
 
     return (
@@ -41,12 +40,9 @@ function Languages() {
                     <FormControl width="auto">
                         <Input name="name" placeholder="Name" />
                     </FormControl>
-                    <FormControl width="auto">
-                        <Input name="code" placeholder="Code" />
-                    </FormControl>
                     <FormControl>
                         <Button type="submit" colorScheme="blue">
-                            Add Language
+                            Add Format
                         </Button>
                     </FormControl>
                 </HStack>
@@ -56,22 +52,20 @@ function Languages() {
                     <Thead>
                         <Tr>
                             <Th>Name</Th>
-                            <Th>Code</Th>
                             <Th>Edit</Th>
                         </Tr>
                     </Thead>
                     <Tbody>
-                        {languages?.map((l, i) => (
+                        {formats?.map((l, i) => (
                             <Tr key={i}>
                                 <Td>{l.name}</Td>
-                                <Td>{l.code}</Td>
                                 <Td>
                                     <HStack>
-                                        <Button onClick={() => deleteLanguage(l)} colorScheme="red">
+                                        <Button onClick={() => deleteFormat(l)} colorScheme="red">
                                             <DeleteIcon />
                                         </Button>
                                         <Button
-                                            // onClick={editLanguage(l.id)}
+                                            // onClick={editFormat(l.id)}
                                             colorScheme="yellow"
                                         >
                                             <EditIcon />
@@ -87,4 +81,4 @@ function Languages() {
     );
 }
 
-export default Languages;
+export default Formats;
