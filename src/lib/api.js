@@ -7,14 +7,14 @@ async function send(url, data = null) {
         (response) => {
             const res = response.data;
             if (res.code != 0) {
-                error(res.code, res.message);
+                error(res?.code, res?.message);
                 return;
             }
 
             return res.data;
         },
         (error) => {
-            error(error.code, error.message);
+            error(error?.code, error?.message);
         }
     );
 }
