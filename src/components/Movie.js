@@ -4,7 +4,7 @@ import React from "react";
 function Movie() {
     return (
         <Box>
-            <Box bg={"var(--primary)"}>Kinonun adi</Box>
+            <Box>Kinonun adi</Box>
             <Box>
                 <Image src="#" />
             </Box>
