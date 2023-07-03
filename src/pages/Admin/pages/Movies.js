@@ -2,6 +2,7 @@ import { Box, Button, Input, FormControl, FormLabel, Textarea, SimpleGrid } from
 import React, { useEffect, useState } from "react";
 import send from "../../../lib/api";
 import Select from "react-select";
+import MovieList from "../../../components/MovieList";
 
 function Movies() {
     const [languages, setLanguages] = useState([]);
@@ -187,6 +188,7 @@ function Movies() {
                     </Button>
                 </form>
             </Box>
+            <MovieList />
         </Box>
     );
 }
