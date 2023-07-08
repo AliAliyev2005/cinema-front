@@ -1,5 +1,13 @@
 import { Box, Button, FormControl, HStack, Input } from "@chakra-ui/react";
-import { Table, Thead, Tbody, Tr, Th, Td, TableContainer } from "@chakra-ui/react";
+import {
+    Table,
+    Thead,
+    Tbody,
+    Tr,
+    Th,
+    Td,
+    TableContainer,
+} from "@chakra-ui/react";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import React, { useEffect, useState } from "react";
 import send from "../../../lib/api";
@@ -67,13 +75,14 @@ function Subtitles() {
                                 <Td>{l.code}</Td>
                                 <Td>
                                     <HStack>
-                                        <Button onClick={() => deleteSubtitle(l)} colorScheme="red">
+                                        <Button
+                                            onClick={() => deleteSubtitle(l)}
+                                            colorScheme="red">
                                             <DeleteIcon />
                                         </Button>
                                         <Button
                                             // onClick={editSubtitle(l.id)}
-                                            colorScheme="yellow"
-                                        >
+                                            colorScheme="yellow">
                                             <EditIcon />
                                         </Button>
                                     </HStack>

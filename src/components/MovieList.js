@@ -16,9 +16,11 @@ function MovieList() {
     }, []);
 
     return (
-        <SimpleGrid spacing={4} templateColumns="repeat(auto-fill, minmax(320px, 1fr))">
-            {Object.values(movies).map((movie) => (
-                <Movie data={movie} />
+        <SimpleGrid
+            spacing={4}
+            templateColumns="repeat(auto-fill, minmax(320px, 1fr))">
+            {Object.values(movies).map((movie, i) => (
+                <Movie key={i} data={movie} />
             ))}
         </SimpleGrid>
     );

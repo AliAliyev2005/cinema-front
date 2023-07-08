@@ -1,10 +1,21 @@
-import { Box, Button, Input, FormControl, FormLabel, Textarea, SimpleGrid } from "@chakra-ui/react";
+import {
+    Box,
+    Button,
+    Input,
+    FormControl,
+    FormLabel,
+    Textarea,
+    SimpleGrid,
+} from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import send from "../../../lib/api";
 import Select from "react-select";
+import { useGlobalContext } from "../../../Contexts/GlobalContex";
 import MovieList from "../../../components/MovieList";
 
 function Movies() {
+    const { movieRef } = useGlobalContext();
+
     const [languages, setLanguages] = useState([]);
     const [selectedLanguages, setSelectedLanguages] = useState([]);
     const [subtitles, setSubtitles] = useState([]);
@@ -66,8 +77,6 @@ function Movies() {
         setSelectedFormats(data);
     }
 
-    console.log(selectedFormats);
-
     async function handleAdd(event) {
         event.preventDefault();
 
@@ -92,7 +101,7 @@ function Movies() {
     return (
         <Box>
             <Box>
-                <form onSubmit={handleAdd}>
+                <form ref={movieRef} onSubmit={handleAdd}>
                     <SimpleGrid columns={2} spacing={10}>
                         <Box>
                             <FormControl>
@@ -187,8 +196,8 @@ function Movies() {
                         Add Movie
                     </Button>
                 </form>
+                <MovieList />
             </Box>
-            <MovieList />
         </Box>
     );
 }
