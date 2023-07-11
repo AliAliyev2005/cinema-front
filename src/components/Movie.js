@@ -1,16 +1,5 @@
 import { EditIcon } from "@chakra-ui/icons";
-import {
-    Card,
-    CardHeader,
-    CardBody,
-    CardFooter,
-    Flex,
-    Heading,
-    Button,
-    Image,
-    Circle,
-    Tooltip,
-} from "@chakra-ui/react";
+import { Card, CardHeader, CardBody, CardFooter, Flex, Heading, Button, Image, Circle, Tooltip } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { useGlobalContext } from "../Contexts/GlobalContex";
 
@@ -23,14 +12,7 @@ function Movie({ data }) {
                 <Heading size="md">{data.name}</Heading>
             </CardHeader>
             <Image objectFit="cover" src={data.poster} alt="Poster" />
-            <Circle
-                position={"absolute"}
-                top={20}
-                right={3}
-                size="45px"
-                bg="crimson"
-                color="white"
-                fontWeight={600}>
+            <Circle position={"absolute"} top={20} right={3} size="45px" bg="crimson" color="white" fontWeight={600}>
                 {data.age_limit}+
             </Circle>
             <CardBody>
@@ -56,11 +38,7 @@ function Movie({ data }) {
                             </Button>
                         </Tooltip>
                     ))}
-                    <Button
-                        onClick={() => {
-                            handleEdit(data);
-                        }}
-                        colorScheme="yellow">
+                    <Button onClick={() => handleEdit(data)} colorScheme="yellow">
                         <EditIcon />
                     </Button>
                 </Flex>
