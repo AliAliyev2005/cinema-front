@@ -6,14 +6,14 @@ import {
     FormLabel,
     Textarea,
     SimpleGrid,
-    Flex,
-    Center,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import send from "../../../lib/api";
 import Select from "react-select";
 import { useGlobalContext } from "../../../Contexts/GlobalContex";
 import MovieList from "../../../components/MovieList";
+import useMultipleSelect from "../../../hooks/useMultipleSelect";
+import useMultiple from "../../../hooks/useMultiple";
 
 function Movies() {
     const { movieRef } = useGlobalContext();
@@ -25,6 +25,13 @@ function Movies() {
     const [selectedGenres, setSelectedGenres] = useState([]);
     const [formats, setFormats] = useState([]);
     const [selectedFormats, setSelectedFormats] = useState([]);
+
+    const [SubtitleSelect] = useMultiple(
+        subtitles?.map((s) => {
+            return { value: s.id, label: s.name };
+        }),
+        "subtitles2"
+    );
 
     async function getLanguages() {
         const result = await send("/language/read.php");
@@ -78,6 +85,8 @@ function Movies() {
         setSelectedFormats(data);
     }
 
+    console.log(movieRef);
+
     async function handleAdd(event) {
         event.preventDefault();
 
@@ -95,6 +104,12 @@ function Movies() {
             subtitles: selectedSubtitles.map((i) => i.value),
             formats: selectedFormats.map((i) => i.value),
         };
+        const opts = event.target.elements.subtitles2.selectedOptions;
+        for (let i = 0; i < opts.length; i++) {
+            const element = opts[i];
+            console.log(element.value);
+        }
+        return;
 
         await send("/movie/create.php", movie);
     }
@@ -123,7 +138,9 @@ function Movies() {
                             </FormControl>
                             <FormControl>
                                 <FormLabel>subtitles</FormLabel>
-                                {/* <Select
+                                <SubtitleSelect />
+                                <Select
+                                    name="subtitles"
                                     options={subtitles?.map((s) => {
                                         return { value: s.id, label: s.name };
                                     })}
@@ -132,7 +149,7 @@ function Movies() {
                                     onChange={handleSelectSubtitle}
                                     isSearchable={true}
                                     isMulti
-                                /> */}
+                                />
                                 {/* <select
                                     style={{
                                         width: "100%",
@@ -233,6 +250,7 @@ function Movies() {
                             <FormControl>
                                 <FormLabel>formats</FormLabel>
                                 <Select
+                                    name="formats"
                                     options={formats?.map((s) => {
                                         return { value: s.id, label: s.name };
                                     })}
@@ -264,6 +282,7 @@ function Movies() {
                             <FormControl>
                                 <FormLabel>Languages</FormLabel>
                                 <Select
+                                    name="languages"
                                     options={languages?.map((l) => {
                                         return { value: l.id, label: l.name };
                                     })}
@@ -277,6 +296,7 @@ function Movies() {
                             <FormControl>
                                 <FormLabel>Genres</FormLabel>
                                 <Select
+                                    name="genres"
                                     options={genres?.map((g) => {
                                         return { value: g.id, label: g.name };
                                     })}
