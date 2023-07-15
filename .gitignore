@@ -21,3 +21,7 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# bunu yaziram ki, git e atanda api getmesin. sende ferqlidi mende ferqlidi.
+# gitignore (yeni bura) yazilan fayllar git e getmir
+/src/lib/api.js

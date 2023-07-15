@@ -15,3 +15,19 @@ code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
         monospace;
 }
+
+.formSelect {
+    border-radius: 4px;
+    border: solid 1px;
+    border-color: rgb(204, 204, 204);
+    margin-top: 10px;
+    padding: 5px 0px;
+}
+
+.formOption {
+    padding: 6px 8px;
+}
+
+.formOption:hover {
+    background-color: #4299e130;
+}

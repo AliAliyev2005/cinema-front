@@ -19,7 +19,7 @@ function MovieList() {
         <SimpleGrid
             spacing={4}
             templateColumns="repeat(auto-fill, minmax(320px, 1fr))">
-            {Object.values(movies).map((movie, i) => (
+            {Object.values(movies)?.map((movie, i) => (
                 <Movie key={i} data={movie} />
             ))}
         </SimpleGrid>
