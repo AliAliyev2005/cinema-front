@@ -109,7 +109,6 @@ function Movies() {
             const element = opts[i];
             console.log(element.value);
         }
-        return;
 
         await send("/movie/create.php", movie);
     }
