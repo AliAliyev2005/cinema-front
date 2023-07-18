@@ -18,6 +18,8 @@ function useMultiple(options, name) {
     const ref = useRef();
     const [selectedOptions, setSelectedOptions] = useState([]);
 
+    console.log("RENDER");
+
     function handleOptionMouseDown(e) {
         e.preventDefault();
         const option = e.target;
@@ -27,16 +29,13 @@ function useMultiple(options, name) {
         let arr = [];
         for (let i = 0; i < so.length; i++) {
             const opt = so[i];
-            console.log("selectedOptions", opt.label);
             arr.push({ value: opt.value, label: opt.label });
         }
         setSelectedOptions(arr);
     }
 
     function handleRemoveOption(value) {
-        setSelectedOptions((prevOptions) =>
-            prevOptions.filter((option) => option.value !== value)
-        );
+        setSelectedOptions((prevOptions) => prevOptions.filter((option) => option.value !== value));
     }
 
     const Select = () => (
@@ -51,7 +50,8 @@ function useMultiple(options, name) {
                         border: "solid 1px ",
                         borderColor: "rgb(204, 204, 204)",
                     }}
-                    display={"Flex"}>
+                    display={"Flex"}
+                >
                     <Box
                         __css={{
                             width: "94%",
@@ -59,14 +59,13 @@ function useMultiple(options, name) {
                             display: "Flex",
                             alignItems: "Center",
                             margin: "6px 8px",
-                        }}>
+                        }}
+                    >
                         {
                             <HStack spacing="24px">
                                 {selectedOptions?.map((o) => (
                                     <ButtonGroup size="xs" isAttached>
-                                        <Button
-                                            borderLeftRadius={"2px"}
-                                            colorScheme="gray">
+                                        <Button borderLeftRadius={"2px"} colorScheme="gray">
                                             {o.label}
                                         </Button>
                                         <IconButton
@@ -96,23 +95,19 @@ function useMultiple(options, name) {
                             color: "#b3b3b3",
                         }}
                         as={Button}
-                        rightIcon={<ChevronDownIcon />}></MenuButton>
+                        rightIcon={<ChevronDownIcon />}
+                    ></MenuButton>
                 </Box>
                 <MenuList __css={{ minWidth: "1px" }}>
                     <select
+                        value={selectedOptions.map((i) => i.value)}
                         className="formSelect"
                         ref={ref}
                         multiple={true}
-                        name={name}>
+                        name={name}
+                    >
                         {options?.map((o) => (
-                            <option
-                                className="formOption"
-                                key={o.value}
-                                selected={selectedOptions.find(
-                                    (i) => i.value == o.value
-                                )}
-                                onMouseDown={handleOptionMouseDown}
-                                value={o.value}>
+                            <option className="formOption" key={o.value} onMouseDown={handleOptionMouseDown} value={o.value}>
                                 <MenuItem>{o.label}</MenuItem>
                             </option>
                         ))}

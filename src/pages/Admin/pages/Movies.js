@@ -1,12 +1,4 @@
-import {
-    Box,
-    Button,
-    Input,
-    FormControl,
-    FormLabel,
-    Textarea,
-    SimpleGrid,
-} from "@chakra-ui/react";
+import { Box, Button, Input, FormControl, FormLabel, Textarea, SimpleGrid } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import send from "../../../lib/api";
 import Select from "react-select";
@@ -18,19 +10,34 @@ import useMultiple from "../../../hooks/useMultiple";
 function Movies() {
     const { movieRef } = useGlobalContext();
     const [languages, setLanguages] = useState([]);
-    const [selectedLanguages, setSelectedLanguages] = useState([]);
     const [subtitles, setSubtitles] = useState([]);
-    const [selectedSubtitles, setSelectedSubtitles] = useState([]);
     const [genres, setGenres] = useState([]);
-    const [selectedGenres, setSelectedGenres] = useState([]);
     const [formats, setFormats] = useState([]);
-    const [selectedFormats, setSelectedFormats] = useState([]);
 
     const [SubtitleSelect] = useMultiple(
         subtitles?.map((s) => {
             return { value: s.id, label: s.name };
         }),
-        "subtitles2"
+        "subtitles"
+    );
+    const [FormatSelect] = useMultiple(
+        formats?.map((s) => {
+            return { value: s.id, label: s.name };
+        }),
+        "formats"
+    );
+    const [LanguageSelect] = useMultiple(
+        languages?.map((s) => {
+            return { value: s.id, label: s.name };
+        }),
+        "languages"
+    );
+    console.log(movieRef);
+    const [GenreSelect] = useMultiple(
+        genres?.map((s) => {
+            return { value: s.id, label: s.name };
+        }),
+        "genres"
     );
 
     async function getLanguages() {
@@ -69,26 +76,15 @@ function Movies() {
         getFormats();
     }, []);
 
-    function handleSelectLanguage(data) {
-        setSelectedLanguages(data);
-    }
-
-    function handleSelectSubtitle(data) {
-        setSelectedSubtitles(data);
-    }
-
-    function handleSelectGenre(data) {
-        setSelectedGenres(data);
-    }
-
-    function handleSelectFormat(data) {
-        setSelectedFormats(data);
-    }
-
-    console.log(movieRef);
+    useEffect(() => {
+        console.log("INIT", movieRef?.current?.elements?.languages?.selectedOptions);
+    }, [movieRef]);
 
     async function handleAdd(event) {
         event.preventDefault();
+
+        console.log(event.target.elements);
+        return;
 
         const movie = {
             name: event.target.elements.name.value,
@@ -99,15 +95,15 @@ function Movies() {
             country: event.target.elements.country.value,
             director: event.target.elements.director.value,
             duration: event.target.elements.duration.value,
-            languages: selectedLanguages.map((i) => i.value),
-            genres: selectedGenres.map((i) => i.value),
-            subtitles: selectedSubtitles.map((i) => i.value),
-            formats: selectedFormats.map((i) => i.value),
+            // languages: event.target.element.languages.selectedOptions.map((i) => i.value),
+            // genres: selectedGenres.map((i) => i.value),
+            // subtitles: selectedSubtitles.map((i) => i.value),
+            // formats: selectedFormats.map((i) => i.value),
         };
-        const opts = event.target.elements.subtitles2.selectedOptions;
+        const opts = event.target.elements.subtitles.selectedOptions;
+        console.log(opts);
         for (let i = 0; i < opts.length; i++) {
             const element = opts[i];
-            console.log(element.value);
         }
         return;
 
@@ -142,17 +138,7 @@ function Movies() {
                             </FormControl>
                             <FormControl>
                                 <FormLabel>formats</FormLabel>
-                                <Select
-                                    name="formats"
-                                    options={formats?.map((s) => {
-                                        return { value: s.id, label: s.name };
-                                    })}
-                                    placeholder="Select formats"
-                                    value={selectedFormats}
-                                    onChange={handleSelectFormat}
-                                    isSearchable={true}
-                                    isMulti
-                                />
+                                <FormatSelect />
                             </FormControl>
                         </Box>
                         <Box>
@@ -174,31 +160,11 @@ function Movies() {
                             </FormControl>
                             <FormControl>
                                 <FormLabel>Languages</FormLabel>
-                                <Select
-                                    name="languages"
-                                    options={languages?.map((l) => {
-                                        return { value: l.id, label: l.name };
-                                    })}
-                                    placeholder="Select Language"
-                                    value={selectedLanguages}
-                                    onChange={handleSelectLanguage}
-                                    isSearchable={true}
-                                    isMulti
-                                />
+                                <LanguageSelect />
                             </FormControl>
                             <FormControl>
                                 <FormLabel>Genres</FormLabel>
-                                <Select
-                                    name="genres"
-                                    options={genres?.map((g) => {
-                                        return { value: g.id, label: g.name };
-                                    })}
-                                    placeholder="Select Genre"
-                                    value={selectedGenres}
-                                    onChange={handleSelectGenre}
-                                    isSearchable={true}
-                                    isMulti
-                                />
+                                <GenreSelect />
                             </FormControl>
                         </Box>
                     </SimpleGrid>
