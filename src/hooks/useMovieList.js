@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import Movie from "./Movie";
+import Movie from "../components/Movie";
 import send from "../lib/api";
 import { SimpleGrid } from "@chakra-ui/react";
 
-function MovieList() {
+function useMovieList() {
     const [movies, setMovies] = useState([]);
 
     async function getMovies() {
@@ -15,15 +15,15 @@ function MovieList() {
         getMovies();
     }, []);
 
-    return (
-        <SimpleGrid
-            spacing={4}
-            templateColumns="repeat(auto-fill, minmax(320px, 1fr))">
+    const MovieList = () => (
+        <SimpleGrid spacing={4} templateColumns="repeat(auto-fill, minmax(320px, 1fr))">
             {Object.values(movies)?.map((movie, i) => (
-                <Movie key={i} data={movie} />
+                <Movie key={i} data={movie} get={getMovies} />
             ))}
         </SimpleGrid>
     );
+
+    return [MovieList, getMovies];
 }
 
-export default MovieList;
+export default useMovieList;

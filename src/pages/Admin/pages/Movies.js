@@ -1,14 +1,13 @@
 import { Box, Button, Input, FormControl, FormLabel, Textarea, SimpleGrid } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import send from "../../../lib/api";
-import Select from "react-select";
 import { useGlobalContext } from "../../../Contexts/GlobalContex";
-import MovieList from "../../../components/MovieList";
-import useMultipleSelect from "../../../hooks/useMultipleSelect";
+import useMovieList from "../../../hooks/useMovieList";
 import useMultiple from "../../../hooks/useMultiple";
 
 function Movies() {
     const { movieRef } = useGlobalContext();
+    const [MovieList, getMovies] = useMovieList();
     const [languages, setLanguages] = useState([]);
     const [subtitles, setSubtitles] = useState([]);
     const [genres, setGenres] = useState([]);
@@ -32,7 +31,6 @@ function Movies() {
         }),
         "languages"
     );
-    console.log(movieRef);
     const [GenreSelect] = useMultiple(
         genres?.map((s) => {
             return { value: s.id, label: s.name };
@@ -76,15 +74,8 @@ function Movies() {
         getFormats();
     }, []);
 
-    useEffect(() => {
-        console.log("INIT", movieRef?.current?.elements?.languages?.selectedOptions);
-    }, [movieRef]);
-
     async function handleAdd(event) {
         event.preventDefault();
-
-        console.log(event.target.elements);
-        return;
 
         const movie = {
             name: event.target.elements.name.value,
@@ -95,19 +86,15 @@ function Movies() {
             country: event.target.elements.country.value,
             director: event.target.elements.director.value,
             duration: event.target.elements.duration.value,
-            // languages: event.target.element.languages.selectedOptions.map((i) => i.value),
-            // genres: selectedGenres.map((i) => i.value),
-            // subtitles: selectedSubtitles.map((i) => i.value),
-            // formats: selectedFormats.map((i) => i.value),
+            languages: Array.from(event.target.elements.languages?.selectedOptions).map((i) => i.value),
+            genres: Array.from(event.target.elements.genres?.selectedOptions).map((i) => i.value),
+            subtitles: Array.from(event.target.elements.subtitles?.selectedOptions).map((i) => i.value),
+            formats: Array.from(event.target.elements.formats?.selectedOptions).map((i) => i.value),
         };
-        const opts = event.target.elements.subtitles.selectedOptions;
-        console.log(opts);
-        for (let i = 0; i < opts.length; i++) {
-            const element = opts[i];
-        }
-        return;
 
         await send("/movie/create.php", movie);
+
+        getMovies();
     }
 
     return (

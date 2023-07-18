@@ -49,6 +49,7 @@ const GlobalProvider = ({ children }) => {
             });
         }
     }
+
     const movieRef = useRef();
 
     return <GlobalContext.Provider value={{ handleEdit, movieRef }}>{children}</GlobalContext.Provider>;

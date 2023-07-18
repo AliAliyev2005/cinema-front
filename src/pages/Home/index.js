@@ -1,8 +1,10 @@
 import { Box, Center, Container, Select } from "@chakra-ui/react";
 import React from "react";
-import MovieList from "../../components/MovieList";
+import useMovieList from "../../hooks/useMovieList";
 
-function index() {
+function Index() {
+    const [MovieList] = useMovieList();
+
     return (
         <Container maxW="container.lg">
             <Center w={"100%"}>
@@ -24,4 +26,4 @@ function index() {
     );
 }
 
-export default index;
+export default Index;

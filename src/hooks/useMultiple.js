@@ -18,8 +18,6 @@ function useMultiple(options, name) {
     const ref = useRef();
     const [selectedOptions, setSelectedOptions] = useState([]);
 
-    console.log("RENDER");
-
     function handleOptionMouseDown(e) {
         e.preventDefault();
         const option = e.target;
@@ -105,6 +103,7 @@ function useMultiple(options, name) {
                         ref={ref}
                         multiple={true}
                         name={name}
+                        onChange={() => {}}
                     >
                         {options?.map((o) => (
                             <option className="formOption" key={o.value} onMouseDown={handleOptionMouseDown} value={o.value}>
