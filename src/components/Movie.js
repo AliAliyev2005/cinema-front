@@ -1,20 +1,7 @@
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
-import {
-    Card,
-    CardHeader,
-    CardBody,
-    CardFooter,
-    Flex,
-    Heading,
-    Button,
-    Image,
-    Circle,
-    Tooltip,
-    Center,
-    Box,
-} from "@chakra-ui/react";
+import { Card, CardHeader, CardBody, CardFooter, Flex, Heading, Button, Image, Circle, Tooltip, HStack } from "@chakra-ui/react";
 import React from "react";
-import { useGlobalContext } from "../Contexts/GlobalContex";
+import { useGlobalContext } from "../contexts/GlobalContex";
 import useAlert from "../hooks/useAlert";
 import send from "../lib/api";
 
@@ -37,45 +24,24 @@ function Movie({ isAdmin, data, get }) {
         <>
             <Card maxW="md">
                 <CardHeader display={"Flex"}>
-                    <Heading display={"flex"} alignItems={"Center"} size="md">
-                        {data.name}
-                    </Heading>
-                    <Box
-                        __css={{
-                            height: "1px",
-                            minWidth: "20px",
-                            maxWidth: "50px",
-                        }}></Box>
-                    {(isAdmin = true) ? (
-                        <Box display={"flex"}>
-                            <Button
-                                onClick={() => handleEdit(data)}
-                                colorScheme="yellow">
-                                <EditIcon />
-                            </Button>
-                            <Box
-                                __css={{
-                                    height: "1px",
-                                    minWidth: "20px",
-                                    maxWidth: "100px",
-                                }}></Box>
-                            <Button colorScheme="red" onClick={onDelete}>
-                                <DeleteIcon />
-                            </Button>
-                        </Box>
-                    ) : (
-                        <div></div>
-                    )}
+                    <Flex w={"100%"} justifyContent={"space-between"}>
+                        <Heading display={"flex"} alignItems={"Center"} size="md">
+                            {data.name}
+                        </Heading>
+                        {isAdmin && (
+                            <HStack spacing="12px">
+                                <Button onClick={() => handleEdit(data)} colorScheme="yellow">
+                                    <EditIcon />
+                                </Button>
+                                <Button colorScheme="red" onClick={onDelete}>
+                                    <DeleteIcon />
+                                </Button>
+                            </HStack>
+                        )}
+                    </Flex>
                 </CardHeader>
                 <Image objectFit="cover" src={data.poster} alt="Poster" />
-                <Circle
-                    position={"absolute"}
-                    top={20}
-                    right={3}
-                    size="45px"
-                    bg="crimson"
-                    color="white"
-                    fontWeight={600}>
+                <Circle position={"absolute"} top={20} right={3} size="45px" bg="crimson" color="white" fontWeight={600}>
                     {data.age_limit}+
                 </Circle>
                 <CardBody>
