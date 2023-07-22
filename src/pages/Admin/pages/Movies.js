@@ -1,4 +1,12 @@
-import { Box, Button, Input, FormControl, FormLabel, Textarea, SimpleGrid } from "@chakra-ui/react";
+import {
+    Box,
+    Button,
+    Input,
+    FormControl,
+    FormLabel,
+    Textarea,
+    SimpleGrid,
+} from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import send from "../../../lib/api";
 import { useGlobalContext } from "../../../Contexts/GlobalContex";
@@ -86,10 +94,18 @@ function Movies() {
             country: event.target.elements.country.value,
             director: event.target.elements.director.value,
             duration: event.target.elements.duration.value,
-            languages: Array.from(event.target.elements.languages?.selectedOptions).map((i) => i.value),
-            genres: Array.from(event.target.elements.genres?.selectedOptions).map((i) => i.value),
-            subtitles: Array.from(event.target.elements.subtitles?.selectedOptions).map((i) => i.value),
-            formats: Array.from(event.target.elements.formats?.selectedOptions).map((i) => i.value),
+            languages: Array.from(
+                event.target.elements.languages?.selectedOptions
+            ).map((i) => i.value),
+            genres: Array.from(
+                event.target.elements.genres?.selectedOptions
+            ).map((i) => i.value),
+            subtitles: Array.from(
+                event.target.elements.subtitles?.selectedOptions
+            ).map((i) => i.value),
+            formats: Array.from(
+                event.target.elements.formats?.selectedOptions
+            ).map((i) => i.value),
         };
 
         await send("/movie/create.php", movie);
@@ -159,7 +175,7 @@ function Movies() {
                         Add Movie
                     </Button>
                 </form>
-                <MovieList />
+                <MovieList isAdmin={true} />
             </Box>
         </Box>
     );

@@ -20,7 +20,7 @@ function Index() {
                 </Select>
             </Center>
             <Box>
-                <MovieList />
+                <MovieList isAdmin={false} />
             </Box>
         </Container>
     );
