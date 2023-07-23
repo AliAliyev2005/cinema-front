@@ -46,7 +46,7 @@ function Movie({ isAdmin, data, get }) {
                             minWidth: "20px",
                             maxWidth: "50px",
                         }}></Box>
-                    {(isAdmin = true) ? (
+                    {isAdmin ? (
                         <Box display={"flex"}>
                             <Button
                                 onClick={() => handleEdit(data)}

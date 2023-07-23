@@ -3,7 +3,7 @@ import Movie from "../components/Movie";
 import send from "../lib/api";
 import { SimpleGrid } from "@chakra-ui/react";
 
-function useMovieList({ isAdmin }) {
+function useMovieList(isAdmin) {
     const [movies, setMovies] = useState([]);
 
     async function getMovies() {
