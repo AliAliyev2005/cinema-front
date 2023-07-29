@@ -3,7 +3,7 @@ import React from "react";
 import useMovieList from "../../hooks/useMovieList";
 
 function Index() {
-    const [MovieList] = useMovieList();
+    const { MovieList } = useMovieList();
 
     return (
         <Container maxW="container.lg">

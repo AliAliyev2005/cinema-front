@@ -1,21 +1,11 @@
 import { ChevronDownIcon, DeleteIcon } from "@chakra-ui/icons";
-import {
-    Box,
-    Button,
-    ButtonGroup,
-    Flex,
-    HStack,
-    IconButton,
-    Menu,
-    MenuButton,
-    MenuItem,
-    MenuList,
-    Stack,
-} from "@chakra-ui/react";
-import React, { useRef, useState } from "react";
+import { Box, Button, ButtonGroup, HStack, IconButton, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
+import React, { useEffect, useRef, useState } from "react";
+import send from "../lib/api";
 
-function useMultiple(options, name) {
+function useMultiple(name, url) {
     const ref = useRef();
+    const [options, setOptions] = useState([]);
     const [selectedOptions, setSelectedOptions] = useState([]);
 
     function handleOptionMouseDown(e) {
@@ -23,18 +13,41 @@ function useMultiple(options, name) {
         const option = e.target;
         option.selected = !option.selected;
 
-        const so = ref.current.selectedOptions;
+        const currentSelectedOptions = ref.current.selectedOptions;
         let arr = [];
-        for (let i = 0; i < so.length; i++) {
-            const opt = so[i];
+        for (let i = 0; i < currentSelectedOptions.length; i++) {
+            const opt = currentSelectedOptions[i];
             arr.push({ value: opt.value, label: opt.label });
         }
+        setSelectedOptions(arr);
+    }
+
+    function updateSelectedOptions(opts) {
+        let arr = [];
+        options.forEach((option) => {
+            Object.values(opts ?? []).forEach((opt) => {
+                if (opt.id == option.value) {
+                    arr.push(option);
+                }
+            });
+        });
         setSelectedOptions(arr);
     }
 
     function handleRemoveOption(value) {
         setSelectedOptions((prevOptions) => prevOptions.filter((option) => option.value !== value));
     }
+
+    useEffect(() => {
+        (async () => {
+            const result = await send(url);
+            setOptions(
+                result.map((o) => {
+                    return { value: o?.id, label: o?.name };
+                })
+            );
+        })();
+    }, []);
 
     const Select = () => (
         <div>
@@ -116,7 +129,7 @@ function useMultiple(options, name) {
         </div>
     );
 
-    return [Select];
+    return [Select, updateSelectedOptions];
 }
 
 export default useMultiple;
