@@ -1,21 +1,13 @@
-import {
-    Box,
-    Button,
-    Input,
-    FormControl,
-    FormLabel,
-    Textarea,
-    SimpleGrid,
-} from "@chakra-ui/react";
+import { Box, Button, Input, FormControl, FormLabel, Textarea, SimpleGrid } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import send from "../../../lib/api";
-import { useGlobalContext } from "../../../Contexts/GlobalContex";
+import { useGlobalContext } from "../../../contexts/GlobalContex";
 import useMovieList from "../../../hooks/useMovieList";
 import useMultiple from "../../../hooks/useMultiple";
 
 function Movies() {
     const { movieRef } = useGlobalContext();
-    const [MovieList, getMovies] = useMovieList();
+    const [MovieList, getMovies] = useMovieList(true);
     const [languages, setLanguages] = useState([]);
     const [subtitles, setSubtitles] = useState([]);
     const [genres, setGenres] = useState([]);
@@ -68,17 +60,8 @@ function Movies() {
 
     useEffect(() => {
         getLanguages();
-    }, []);
-
-    useEffect(() => {
         getSubtitles();
-    }, []);
-
-    useEffect(() => {
         getGenres();
-    }, []);
-
-    useEffect(() => {
         getFormats();
     }, []);
 
@@ -94,18 +77,10 @@ function Movies() {
             country: event.target.elements.country.value,
             director: event.target.elements.director.value,
             duration: event.target.elements.duration.value,
-            languages: Array.from(
-                event.target.elements.languages?.selectedOptions
-            ).map((i) => i.value),
-            genres: Array.from(
-                event.target.elements.genres?.selectedOptions
-            ).map((i) => i.value),
-            subtitles: Array.from(
-                event.target.elements.subtitles?.selectedOptions
-            ).map((i) => i.value),
-            formats: Array.from(
-                event.target.elements.formats?.selectedOptions
-            ).map((i) => i.value),
+            languages: Array.from(event.target.elements.languages?.selectedOptions).map((i) => i.value),
+            genres: Array.from(event.target.elements.genres?.selectedOptions).map((i) => i.value),
+            subtitles: Array.from(event.target.elements.subtitles?.selectedOptions).map((i) => i.value),
+            formats: Array.from(event.target.elements.formats?.selectedOptions).map((i) => i.value),
         };
 
         await send("/movie/create.php", movie);
@@ -175,7 +150,7 @@ function Movies() {
                         Add Movie
                     </Button>
                 </form>
-                <MovieList isAdmin={true} />
+                <MovieList />
             </Box>
         </Box>
     );
