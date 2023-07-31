@@ -33,29 +33,14 @@ function Movie({ isAdmin, data, handleDelete, handleEdit }) {
                     </Heading>
                     {isAdmin && (
                         <HStack spacing="12px">
-                            <IconButton
-                                colorScheme="yellow"
-                                onClick={handleEdit}
-                                icon={<EditIcon />}
-                            />
-                            <IconButton
-                                colorScheme="red"
-                                onClick={onDelete}
-                                icon={<DeleteIcon />}
-                            />
+                            <IconButton colorScheme="yellow" onClick={handleEdit} icon={<EditIcon />} />
+                            <IconButton colorScheme="red" onClick={onDelete} icon={<DeleteIcon />} />
                         </HStack>
                     )}
                 </Flex>
             </CardHeader>
             <Image objectFit="cover" src={data.poster} alt="Poster" />
-            <Circle
-                position={"absolute"}
-                top={20}
-                right={3}
-                size="45px"
-                bg="crimson"
-                color="white"
-                fontWeight={600}>
+            <Circle position={"absolute"} top={20} right={3} size="45px" bg="crimson" color="white" fontWeight={600}>
                 {data.age_limit}+
             </Circle>
             <CardBody>

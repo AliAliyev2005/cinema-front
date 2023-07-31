@@ -1,15 +1,13 @@
 import axios from "axios";
 
-const apiBase = "http://localhost/cinema/api";
-
 async function send(url, data = null) {
     try {
-        const response = await axios.post(`${apiBase}${url}`, data);
+        const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}${url}`, data);
         const res = response.data;
 
         if (res.code !== 0) {
-            showError(res.code, res.message);
-            return null;
+            // showError(res.code, res.message);
+            return res;
         }
 
         return res.data;
