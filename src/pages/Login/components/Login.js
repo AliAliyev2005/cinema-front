@@ -7,11 +7,16 @@ function Login() {
     return (
         <div>
             <FormControl>
-                <FormLabel mt={2}>Login</FormLabel>
-                <Input type="email" placeholder="Login" />
+                <FormLabel mt={2}>Name</FormLabel>
+                <Input type="email" placeholder="Name" />
                 <FormLabel mt={2}>Password</FormLabel>
                 <Input type="password" placeholder="Password" />
-                <Button onSubmit={handleSubmit} type="submit" mt={5} colorScheme="blue" w={"100%"}>
+                <Button
+                    onSubmit={handleSubmit}
+                    type="submit"
+                    mt={5}
+                    colorScheme="blue"
+                    w={"100%"}>
                     Login
                 </Button>
             </FormControl>

@@ -1,5 +1,6 @@
 import { Button, FormControl, FormLabel, Input } from "@chakra-ui/react";
 import React from "react";
+import send from "../../../lib/api";
 
 function Register() {
     function handleSubmit(event) {
@@ -10,6 +11,8 @@ function Register() {
             email: event.target.elements.email.value,
             password: event.target.elements.password.value,
         };
+
+        send("/user/create.php", request);
     }
 
     return (
@@ -23,7 +26,12 @@ function Register() {
                 <Input name="email" type="email" placeholder="Email" />
                 <FormLabel mt={2}>Password</FormLabel>
                 <Input name="password" type="password" placeholder="Password" />
-                <Button onSubmit={handleSubmit} type="submit" mt={5} colorScheme="blue" w={"100%"}>
+                <Button
+                    onSubmit={handleSubmit}
+                    mt={5}
+                    type="submit"
+                    colorScheme="blue"
+                    w={"100%"}>
                     Register
                 </Button>
             </FormControl>

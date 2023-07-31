@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const apiBase = "http://cinema/api";
+const apiBase = "http://localhost/cinema/api";
 
 async function send(url, data = null) {
     try {
